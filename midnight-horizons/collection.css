@@ -1,0 +1,265 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  font-family: "Montserrat", sans-serif;
+}
+html, body {
+  height: 100%;
+  background: #0d0d0d;
+  margin: 0;
+  padding: 0;
+}
+.site-header{
+  position: fixed;
+  z-index: 100;
+  width: 100%;
+  top: 20px;
+  display: flex;
+  justify-content: space-between;
+  left: 30px;
+}
+.intro{
+  height: auto;
+  padding: 80px 30px 40px;
+  color: #fff;
+  background: linear-gradient(360deg, #0d0d0d 0%,#1a1a1a 50%, #333232 100%);
+  font-size: 1rem;
+  font-weight: 700;
+  margin-top: 0px;  
+}
+.intro h4{
+  text-transform: uppercase;
+  font-size: 4rem;
+}
+.intro p{
+  max-width: 40vw;
+}
+.site-title{
+  color: #fff;
+  margin: 0;
+  font-size: 2rem;
+  letter-spacing: 0px;
+  font-weight: 500;
+}
+.header-right{
+  display: flex;
+  flex-direction: column;
+}
+.header-list{
+  list-style: none;
+  display: flex;
+  gap:20px;
+  cursor: pointer;
+  margin-right: 120px;
+}
+.header-list li{
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 300;
+  gap: 5px;
+  margin-top: 5px;
+  transition: all 0.3s ease-in-out;
+}
+.header-list li:hover{
+  text-decoration: underline;
+}
+.wallpaper-grid{
+  column-count: 4;
+  column-gap: 20px;
+  gap: 20px;
+  padding: 50px 30px 60px;
+  background: #0d0d0d;
+}
+@media (max-width: 1200px) {
+  .wallpaper-grid {
+    column-count: 3;
+  }
+}
+
+@media (max-width: 768px) {
+  .wallpaper-grid {
+    column-count: 2;
+  }
+}
+
+@media (max-width: 480px) {
+  .wallpaper-grid {
+    column-count: 1;
+  }
+}
+
+/*Mobile responsive*/
+@media (max-width:768px) {
+  .header-list{
+    margin-right: 50px;
+    gap:10px;
+    font-size: 0.9rem;
+  }
+  .intro h4{
+    font-size: 2rem;
+  }
+  .intro {
+    max-width: 100%;
+    font-size: 0.95rem;
+  }
+}
+.wallpaper-card{
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+}
+.wallpaper-card img {
+  width: 100%;
+  height: auto;
+  
+  display: block;
+  border-radius: 10px;
+  transition: transform 0.4s ease;
+  object-fit: cover;
+}
+.wallpaper-card img:hover{
+  transform: scale(1.02);
+}
+.download-btn{
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(255,255,255,0.1);
+  border:none;
+  padding: 8px 12px;
+  color: #fff;
+  font-size: 1.2rem;
+  cursor: pointer;
+  border-radius: 6px;
+  backdrop-filter: blur(6px);
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.wallpaper-card:hover .download-btn {
+  opacity: 1;
+}
+.download-btn:hover{
+  transform: scale(1.1);
+  background: rgb(255, 255, 255);
+  color: #0d0d0d;
+}
+.download-modal{
+  position: fixed;
+  display: none;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background:rgba(0,0,0,0.7);
+  backdrop-filter: blur(6px);
+  justify-content: center;
+  align-items: center;
+  z-index:1000
+}
+
+.modal-content{
+  background: #1a1a1a;
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+  color: #fff;
+  max-width: 300px;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+  width: 100%;
+}
+ .modal-content a{
+  display: block;
+  margin: 10px 0;
+  text-decoration: none;
+  padding: 10px;
+  border: 1px solid #555;
+  border-radius: 6px;
+  color: white;
+ }
+ .modal-content a:hover{
+  color: #000;
+  background: #fff;
+ }
+.close-btn{
+  position: absolute;
+  top:15px;
+  right: 20px;
+  cursor: pointer;
+  font-size: 2rem;
+  color: #ccc;
+}
+
+/*About modal*/
+.about-modal{
+  display: flex;
+  position: fixed;
+  top: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.8);
+  backdrop-filter: blur(6px);
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+.about-modal.show{
+  opacity: 1;
+  pointer-events: auto;
+}
+.about-content{
+  background: linear-gradient(135deg,#1a1a1a,#0d0d0d);
+  padding: 40px;
+  max-width: 600px;
+  width: 90%;
+  border-radius: 12px;
+  color: #fff;
+  position: relative;
+  text-align: center;
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.05);
+  transform: scale(0.8);
+  transition: transform 0.3s ease;
+}
+.about-modal.show .about-content {
+  transform: scale(1);
+}
+
+.about-content h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.about-content p {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+.about-content .close-btn {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 2rem;
+  cursor: pointer;
+  color: #ccc;
+}
+.icons a i {
+  font-size: 1.8rem;
+  color: #bbb;
+  margin: 0 10px;
+  transition: 0.3s ease;
+}
+.icons a i:hover {
+  color: #fff;
+  transform: scale(1.2);
+}

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Void Forms | DarkCanvas</title>
+    <link rel="stylesheet" href="collection.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/boxicons@latest/css/boxicons.min.css"
+    />
+  </head>
+  <body>
+    <header class="site-header">
+      <h1 class="site-title">AetherWalls</h1>
+      <div class="header-right">
+        <ul class="header-list">
+          <li onclick="openAbout()">About</li>
+        </ul>
+      </div>
+    </header>
+    <section class="intro">
+      <h4>Midnight Horizons</h4>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis
+        fugit consequuntur reprehenderit quibusdam nulla distinctio sunt
+        eligendi cumque consectetur quae.
+      </p>
+    </section>
+    <section class="wallpaper-grid">
+      <!-- Grid images -->
+      <div class="wallpaper-card">
+        <img src="img1.jpg" alt="Void Wallpaper 1" />
+        <button class="download-btn" onclick="openModal('images/void1.jpg')">
+          ⇩
+        </button>
+      </div>
+      <div class="wallpaper-card">
+        <img src="img2.jpg" alt="Void Wallpaper 2" />
+        <button class="download-btn" onclick="openModal('images/void2.jpg')">
+          ⇩
+        </button>
+      </div>
+      <div class="wallpaper-card">
+        <img src="img3.jpg" alt="Void Wallpaper 3" />
+        <button class="download-btn" onclick="openModal('images/void3.jpg')">
+          ⇩
+        </button>
+      </div>
+      <div class="wallpaper-card">
+        <img src="img5.jpg" alt="Void Wallpaper 3" />
+        <button class="download-btn" onclick="openModal('images/void3.jpg')">
+          ⇩
+        </button>
+      </div>
+      <div class="wallpaper-card">
+        <img src="img4.jpg" alt="Void Wallpaper 3" />
+        <button class="download-btn" onclick="openModal('images/void3.jpg')">
+          ⇩
+        </button>
+      </div>
+      <div class="wallpaper-card">
+        <img src="img4.jpg" alt="Void Wallpaper 3" />
+        <button class="download-btn" onclick="openModal('images/void3.jpg')">
+          ⇩
+        </button>
+      </div>
+      <div class="wallpaper-card">
+        <img src="img1.jpg" alt="Void Wallpaper 3" />
+        <button class="download-btn" onclick="openModal('images/void3.jpg')">
+          ⇩
+        </button>
+      </div>
+      <div class="wallpaper-card">
+        <img src="img2.jpg" alt="Void Wallpaper 3" />
+        <button class="download-btn" onclick="openModal('images/void3.jpg')">
+          ⇩
+        </button>
+      </div>
+      <div class="wallpaper-card">
+        <img src="img3.jpg" alt="Void Wallpaper 3" />
+        <button class="download-btn" onclick="openModal('images/void3.jpg')">
+          ⇩
+        </button>
+      </div>
+      <!-- Add more... -->
+    </section>
+
+    <!-- Download Modal -->
+    <div id="modal" class="download-modal">
+      <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">✕</span>
+        <h3>Download Options</h3>
+        <div id="modal-links">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </div>
+    <!-- About Modal -->
+    <div id="aboutModal" class="about-modal">
+  <div class="about-content">
+    <span class="close-btn" onclick="closeAbout()">✕</span>
+    <h2>About AetherWalls</h2>
+    <p>AetherWalls is a curated collection of high-quality dark-themed wallpapers designed for minimal and immersive aesthetics. Built for creators, explorers, and night owls who love clean, moody visuals.</p>
+    <p>All wallpapers are optimized for different devices and resolutions. Enjoy browsing our collections and customize your screen with elegance.</p>
+    <p style="opacity: 0.6;">Made with ✦ in the void by Sahil Pal</p>
+    <p style="opacity:0.6">Reach me at:</p>
+    <p style="opacity:0.6">
+      <div class="icons">
+      <a target="_blank" href="#"><i class="bx bxl-instagram"></i></a>
+      <a target="_blank" href="https://github.com/Sahilpal3"><i class="bx bxl-github"></i></a>
+      <a target="_blank" href="https://www.linkedin.com/in/sahil-pal-603860275/"><i class="bx bxl-linkedin"></i></a>
+    </div>
+    </p>
+  </div>
+</div>
+    <script>
+      function openModal(imgSrc) {
+        const modal = document.getElementById("modal");
+        const modalLinks = document.getElementById("modal-links");
+        const baseName = imgSrc.split(".jpg")[0];
+
+        modalLinks.innerHTML = `
+        <a href="${baseName}-original.jpg" download>Original</a>
+        <a href="${baseName}-mobile.jpg" download>Mobile</a>
+        <a href="${baseName}-tablet.jpg" download>Tablet</a>
+        <a href="${baseName}-4k.jpg" download>4K Desktop</a>
+      `;
+        modal.style.display = "flex";
+      }
+
+      function closeModal() {
+        document.getElementById("modal").style.display = "none";
+      }
+      function openAbout() {
+        const modal = document.getElementById("aboutModal");
+        modal.classList.add("show");
+      }
+      function closeAbout() {
+        const modal = document.getElementById("aboutModal");
+        modal.classList.remove("show");
+      }
+
+    </script>
+  </body>
+</html>
