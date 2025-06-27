@@ -170,19 +170,26 @@ html, body {
   border-radius: 12px;
   text-align: center;
   color: #fff;
-  max-width: 300px;
+  max-width: 90vw;
+  max-height: 90vh;
   box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
-  width: 100%;
+  width: auto;
+  overflow: auto;
 }
- .modal-content a{
-  display: block;
-  margin: 10px 0;
+ .modal-content a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   text-decoration: none;
-  padding: 10px;
+  padding: 10px 16px;
   border: 1px solid #555;
   border-radius: 6px;
   color: white;
- }
+  background: transparent;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+}
  .modal-content a:hover{
   color: #000;
   background: #fff;
@@ -262,4 +269,21 @@ html, body {
 .icons a i:hover {
   color: #fff;
   transform: scale(1.2);
+}
+#modal-links{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+#modal-image{
+  width: 100%;
+  height: auto;
+  margin-top: 20px;
+  max-height: 60vh;
+  object-fit: contain;
+  border-radius: 12px;
+  margin-bottom: 1rem;
 }
