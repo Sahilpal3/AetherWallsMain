@@ -67,7 +67,8 @@ html, body {
   text-decoration: underline;
 }
 .wallpaper-grid{
-  column-count: 4;
+  column-count: 3;
+  width: auto;
   column-gap: 20px;
   gap: 20px;
   padding: 50px 30px 60px;
