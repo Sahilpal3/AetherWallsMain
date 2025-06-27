@@ -3,11 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Void Forms | DarkCanvas</title>
-    <link rel="stylesheet" href="../static/collection.css">
+    <title>AetherWalls</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link
       rel="stylesheet"
-      href="https://unpkg.com/boxicons@latest/css/boxicons.min.css"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,200,0,0"
     />
   </head>
   <body>
@@ -15,91 +19,98 @@
       <h1 class="site-title">AetherWalls</h1>
       <div class="header-right">
         <ul class="header-list">
-          <li onclick="openAbout()">About</li>
+          <li>About</li>
         </ul>
       </div>
     </header>
-    <section class="intro">
-      <h4>Midnight Horizons</h4>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis
-        fugit consequuntur reprehenderit quibusdam nulla distinctio sunt
-        eligendi cumque consectetur quae.
-      </p>
-    </section>
-    <section class="wallpaper-grid" id="wallpaperGrid">
-      <!-- Fetch through the backend -->
-    </section>
-
-    <!-- Download Modal -->
-    <div id="modal" class="download-modal">
-      <div class="modal-content">
-        <span class="close-btn" onclick="closeModal()">✕</span>
-        <h3>Download Options</h3>
-        <img id="modal-image" src="" alt="Selected Wallpaper" />
-        <div id="modal-links">
-          <!-- Populated by JS -->
+    <div class="content">
+        <div class="slider-container">
+      <div class="slider-wrapper swiper-wrapper">
+        <div class="slider-item swiper-slide">
+          <!--Slider List Items-->
+          <div class="slide-content">
+            <h3 class="slide-subtitle">Collection 01</h3>
+            <h2 class="slide-title">
+              Midnight Horizons
+            </h2>
+            <p class="slide-description">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui et
+              vitae porro dolor delectus officia quasi deserunt architecto omnis
+              quibusdam.
+            </p>
+            <a href="{{ url_for('collection') }}"" class="slide-button"><span>Explore</span></a>
+          </div>
+        </div>
+        <div class="slider-item swiper-slide">
+          <div class="slide-content">
+            <h3 class="slide-subtitle">Collection 02</h3>
+            <h2 class="slide-title">
+              Glitch Echoes
+            </h2>
+            <p class="slide-description">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui et
+              vitae porro dolor delectus officia quasi deserunt architecto omnis
+              quibusdam.
+            </p>
+            <a href="#" class="slide-button"><span>Explore</span></a>
+          </div>
+        </div>
+        <div class="slider-item swiper-slide">
+          <div class="slide-content">
+            <h3 class="slide-subtitle">Collection 03</h3>
+            <h2 class="slide-title">
+              Muted Geometry
+            </h2>
+            <p class="slide-description">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui et
+              vitae porro dolor delectus officia quasi deserunt architecto omnis
+              quibusdam.
+            </p>
+            <a href="#" class="slide-button"><span>Explore</span></a>
+          </div>
+        </div>
+        <div class="slider-item swiper-slide">
+          <div class="slide-content">
+            <h3 class="slide-subtitle">Collection 04</h3>
+            <h2 class="slide-title">
+              Nebula Drift
+            </h2>
+            <p class="slide-description">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui et
+              vitae porro dolor delectus officia quasi deserunt architecto omnis
+              quibusdam.
+            </p>
+            <a href="#" class="slide-button"><span>Explore</span></a>
+          </div>
+        </div>
+        <div class="slider-item swiper-slide">
+          <div class="slide-content">
+            <h3 class="slide-subtitle">Collection 05</h3>
+            <h2 class="slide-title">
+              Dream in Monochrome
+            </h2>
+            <p class="slide-description">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui et
+              vitae porro dolor delectus officia quasi deserunt architecto omnis
+              quibusdam.
+            </p>
+            <a href="#" class="slide-button"><span>Explore</span></a>
+          </div>
+        </div>
+      </div>
+      <div class="slider-controls">
+        <div class="slider-pagination">
+          <div class="slider-indicator"></div>
+          <li class="slider-tab">Midnight Horizons</li>
+          <li class="slider-tab">Glitch Echoes</li>
+          <li class="slider-tab">Muted Geometry</li>
+          <li class="slider-tab">Nebula Drift</li>
+          <li class="slider-tab">Dream in Monochrome</li>
         </div>
       </div>
     </div>
-    <!-- About Modal -->
-    <div id="aboutModal" class="about-modal">
-  <div class="about-content">
-    <span class="close-btn" onclick="closeAbout()">✕</span>
-    <h2>About AetherWalls</h2>
-    <p>AetherWalls is a curated collection of high-quality dark-themed wallpapers designed for minimal and immersive aesthetics. Built for creators, explorers, and night owls who love clean, moody visuals.</p>
-    <p>All wallpapers are optimized for different devices and resolutions. Enjoy browsing our collections and customize your screen with elegance.</p>
-    <p style="opacity: 0.6;">Made with ✦ in the void by Sahil Pal</p>
-    <p style="opacity:0.6">Reach me at:</p>
-    <p style="opacity:0.6">
-      <div class="icons">
-        <a target="_blank" href="#"><i class="bx bxl-instagram"></i></a>
-        <a target="_blank" href="https://github.com/Sahilpal3"><i class="bx bxl-github"></i></a>
-        <a target="_blank" href="https://www.linkedin.com/in/sahil-pal-603860275/"><i class="bx bxl-linkedin"></i></a>
-      </div>
     </div>
-    </p>
-  </div>
-</div>
-    <script>
-      function openModal(imgSrc) {
-        const modal = document.getElementById("modal");
-        const modalLinks = document.getElementById("modal-links");
-        const modalImage = document.getElementById("modal-image");
-        
-        const baseName = imgSrc.split(".jpg")[0];
-        modalImage.src = imgSrc;
-
-        modalLinks.innerHTML = `
-        <a href="${baseName}-original.jpg" download>Original</a>
-        <a href="${baseName}-mobile.jpg" download>Mobile</a>
-        <a href="${baseName}-tablet.jpg" download>Tablet</a>
-        <a href="${baseName}-4k.jpg" download>4K Desktop</a>
-      `;
-        modal.style.display = "flex";
-      }
-
-      function closeModal() {
-        document.getElementById("modal").style.display = "none";
-      }
-      function openAbout() {
-        const modal = document.getElementById("aboutModal");
-        modal.classList.add("show");
-      }
-      function closeAbout() {
-        const modal = document.getElementById("aboutModal");
-        modal.classList.remove("show");
-      }
-
-
-      fetch("/api/wallpapers").then(res=>res.json()).then(images=>{
-        const grid = document.getElementById("wallpaperGrid");
-        grid.innerHTML = images.map(img =>`
-          <div class="wallpaper-card">
-            <img src="/static/images/${img.filename}" alt="${img.alt}"/>
-            <button class="download-btn" onclick="openModal('images/${img.filename}')">⇩</button>
-          </div>`).join('');
-      });
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
   </body>
 </html>
