@@ -20,8 +20,9 @@
       <h1 class="site-title">AetherWalls</h1>
       <div class="header-right">
         <ul class="header-list">
-          <li onclick="openAbout()">About</li>
-          <li onclick="openSignin()">Account</li>
+            <li onclick="openAbout()">About</li>
+            <!--Change account to handleAccount once done styling Account Panel-->
+            <li onclick="openSignin()">Account</li>
         </ul>
       </div>
     </header>
@@ -121,7 +122,7 @@
     </div>
     <div class="sign-in" id="sign-in">
       <div class="sign-in-content">
-        <form action="">
+        <form method="POST" action="{{ url_for('login') }}" id="login-form">
         <span class="close-btn" onclick="closeSignin()">✕</span>
         <h3>Login to your Account</h3>
         <button class="google-btn">
@@ -129,33 +130,40 @@
           <span>Continue with Google</span>
         </button>
         <p style="justify-content: center;">OR</p>
-        <input type="text" name="email" id="email" placeholder="Email Address"><br>
-        <input type="text" name="email" id="email" placeholder="Password"><br>
+        <input type="text" name="email" id="login-email" placeholder="Email Address"><br>
+        <input type="password" name="password" id="login-password" placeholder="Password"><br>
+        <p id="login-message" class="form-message"></p>
         <a href="" id="forgot">Forgot your password?</a><br>
         <button id="cont-button">Continue</button>
-        <p>Don't have an Account?<a href="#">Sign-up</a></p>
+        <p>Don't have an Account?<a href="#" onclick="openRegister()">Sign-up</a></p>
       </form>
+      </div>
+    </div>
+    <div class="sign-in" id="register">
+      <div class="sign-in-content">
+        <form method="POST" action="{{ url_for('register') }}" id="register-form">
+        <span class="close-btn" onclick="closeRegister()">✕</span>
+        <h3>Register a New Account</h3>
+        <button class="google-btn">
+          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google logo">
+          <span>Continue with Google</span>
+        </button>
+        <p style="justify-content: center;">OR</p>
+        <input type="text" name="email" id="register-email" placeholder="Email Address"><br>
+        <input type="text" name="username" id="register-username" placeholder="Username"><br>
+        <input type="password" name="password" id="register-password" placeholder="Password"><br>
+        <p id="login-message" class="form-message"></p>
+        <button id="cont-button">Continue</button>
+        <p>Already have an account?<a href="#" onclick="openSignin()">Sign-in</a></p>
+      </form>
+      </div>
+    </div>
+    <div class="acc-panel" id="acc-panel">
+      <div class="acc-content" id="acc-content">
+        <!-- Content will be populated via JavaScript -->
       </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
-    <script>
-      function openAbout(){
-        const modal = document.getElementById("about-modal");
-        modal.classList.add("show");
-      }
-      function closeAbout(){
-        const modal = document.getElementById("about-modal");
-        modal.classList.remove("show");
-      }
-      function openSignin(){
-        const modal = document.getElementById("sign-in");
-        modal.classList.add("show");
-      }
-      function closeSignin(){
-        const modal = document.getElementById("sign-in");
-        modal.classList.remove("show")
-      }
-    </script>
   </body>
 </html>

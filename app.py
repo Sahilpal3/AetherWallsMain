@@ -1,11 +1,12 @@
-from flask import Flask, jsonify, render_template, send_from_directory,request,url_for
+from flask import Flask, jsonify, render_template, send_from_directory,request,url_for,session,redirect,flash
 import os
 from werkzeug.utils import secure_filename
+from werkzeug.security import generate_password_hash,check_password_hash
 from datetime import datetime
 import sqlite3
 
 app = Flask(__name__,template_folder="midnight-horizons/templates",static_folder="midnight-horizons/static")
-
+app.secret_key = "Aether_walls_2025_1539"
 
 
 #create a dictionary for collection data and the generate the page dynamically
@@ -63,6 +64,10 @@ def collection_view(collection_name):
 #maps the directory for this method to upload folder specifically for HTTP POST requests
 @app.route('/upload',methods=['POST'])
 def upload_image():
+    #check if user exists
+    if 'user_id' not in session:
+        return jsonify({"error":"unauthorized"}),403
+    
     if 'image' not in request.files:
         return jsonify({"error":"No image part"}), 400
     
@@ -135,5 +140,63 @@ def wallpapers():
     
     return jsonify(wallpapers)
     
+    
+#Login logic
+#Register Route
+@app.route('/register',methods=['POST'])
+def register():
+    email = request.form['email']
+    password = request.form['password']
+    username = request.form['username']
+    hashed_pw = generate_password_hash(password)
+    
+    #Enter the data into users db
+    conn = sqlite3.connect("wallpapers.db")
+    cur = conn.cursor()
+    try:
+        cur.execute("INSERT INTO users (email, password, username) VALUES (?,?,?)",(email,hashed_pw,username))
+        conn.commit()
+    except sqlite3.IntegrityError:
+        return jsonify({'error':'User Already Exists'}),400
+    finally:
+        conn.close()
+        
+    return jsonify({'message':'Registration Successful'}), 200
+
+#Login Route
+@app.route('/login',methods=['POST'])
+def login():
+    email = request.form['email']
+    password = request.form['password']
+    
+    #Cross Checking with DB
+    conn = sqlite3.connect("wallpapers.db")
+    cur = conn.cursor()
+    cur.execute("SELECT id,password FROM users WHERE email = ?",(email,))
+    user = cur.fetchone()
+    conn.close()
+    
+    #Now we check if the user exists and wether the password match
+    if user and check_password_hash(user[1],password):
+        #if true set him as the current session user
+        session['user_id'] = user[0]
+        session['email'] = email
+        return jsonify({"message":"Login Successful!"}), 200
+    return jsonify({"Error" : "Invalid credentials"}), 401
+
+#Logout Route
+@app.route('/logout',methods=['POST'])
+def logout():
+    #remove user from session
+    session.clear()
+    return redirect(url_for('home'))
+
+#function to chek if a user is logged in
+@app.route('/api/session/')
+def session_info():
+    if 'user_id' in session:
+        return jsonify({'logged_in': True, 'email': session.get('email')})
+    return jsonify({'logged_in': False})
+
 if __name__ == "__main__":
     app.run(debug=True)
