@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AetherWalls</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
@@ -19,7 +20,8 @@
       <h1 class="site-title">AetherWalls</h1>
       <div class="header-right">
         <ul class="header-list">
-          <li>About</li>
+          <li onclick="openAbout()">About</li>
+          <li onclick="openSignin()">Account</li>
         </ul>
       </div>
     </header>
@@ -31,86 +33,129 @@
           <div class="slide-content">
             <h3 class="slide-subtitle">Collection 01</h3>
             <h2 class="slide-title">
-              Midnight Horizons
+              Echo Chamber
             </h2>
             <p class="slide-description">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui et
-              vitae porro dolor delectus officia quasi deserunt architecto omnis
-              quibusdam.
+              A soundwave of visuals — curated wallpapers featuring iconic album covers, legendary artists, and the aesthetics of music culture across genres.
             </p>
-            <a href="{{ url_for('collection') }}"" class="slide-button"><span>Explore</span></a>
+            <a href="{{ url_for('collection_view', collection_name = 'echo-chamber') }}" class="slide-button"><span>Explore</span></a>
           </div>
         </div>
         <div class="slider-item swiper-slide">
           <div class="slide-content">
             <h3 class="slide-subtitle">Collection 02</h3>
             <h2 class="slide-title">
-              Glitch Echoes
+              Dream logic
             </h2>
             <p class="slide-description">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui et
-              vitae porro dolor delectus officia quasi deserunt architecto omnis
-              quibusdam.
+              Dive into the bizarre and beautiful. A surrealist gallery of wallpapers where reality bends, colors collide, and imagination reigns unfiltered.
             </p>
-            <a href="#" class="slide-button"><span>Explore</span></a>
+            <a href="{{ url_for('collection_view', collection_name = 'dream-logic') }}" class="slide-button"><span>Explore</span></a>
           </div>
         </div>
         <div class="slider-item swiper-slide">
           <div class="slide-content">
             <h3 class="slide-subtitle">Collection 03</h3>
             <h2 class="slide-title">
-              Muted Geometry
+              EarthBound Eden
             </h2>
             <p class="slide-description">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui et
-              vitae porro dolor delectus officia quasi deserunt architecto omnis
-              quibusdam.
+              From secluded fjords to neon-lit cities — discover wallpapers capturing Earth's most cinematic locations, captured to feel like stills from a dream.
             </p>
-            <a href="#" class="slide-button"><span>Explore</span></a>
+            <a href="{{ url_for('collection_view', collection_name = 'earthbound-eden') }}" class="slide-button"><span>Explore</span></a>
           </div>
         </div>
         <div class="slider-item swiper-slide">
           <div class="slide-content">
             <h3 class="slide-subtitle">Collection 04</h3>
             <h2 class="slide-title">
-              Nebula Drift
+              Pixel Pulse
             </h2>
             <p class="slide-description">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui et
-              vitae porro dolor delectus officia quasi deserunt architecto omnis
-              quibusdam.
+              A tribute to games that immerse you. Featuring atmospheric landscapes, character art, and UI-inspired designs from beloved titles.
             </p>
-            <a href="#" class="slide-button"><span>Explore</span></a>
+            <a href="{{ url_for('collection_view', collection_name = 'pixel-pulse') }}" class="slide-button"><span>Explore</span></a>
           </div>
         </div>
         <div class="slider-item swiper-slide">
           <div class="slide-content">
             <h3 class="slide-subtitle">Collection 05</h3>
             <h2 class="slide-title">
-              Dream in Monochrome
+              Void Reverie
             </h2>
             <p class="slide-description">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui et
-              vitae porro dolor delectus officia quasi deserunt architecto omnis
-              quibusdam.
+              A cosmic blend of abstract minimalism, dark hues, and ambient textures — wallpapers that feel like they're dreaming in deep space.
             </p>
-            <a href="#" class="slide-button"><span>Explore</span></a>
+            <a href="{{ url_for('collection_view', collection_name = 'void-reverie') }}" class="slide-button"><span>Explore</span></a>
           </div>
         </div>
       </div>
       <div class="slider-controls">
         <div class="slider-pagination">
           <div class="slider-indicator"></div>
-          <li class="slider-tab">Midnight Horizons</li>
-          <li class="slider-tab">Glitch Echoes</li>
-          <li class="slider-tab">Muted Geometry</li>
-          <li class="slider-tab">Nebula Drift</li>
-          <li class="slider-tab">Dream in Monochrome</li>
+          <li class="slider-tab">Echo Chamber</li>
+          <li class="slider-tab">Dream Logic</li>
+          <li class="slider-tab">Earthbound Eden</li>
+          <li class="slider-tab">Pixel Pulse</li>
+          <li class="slider-tab">Void Reverie</li>
         </div>
       </div>
     </div>
     </div>
+    <div class="about-modal" id="about-modal">
+      <div class="about-content">
+        <span class="close-btn" onclick="closeAbout()">✕</span>
+        <h2>About AetherWalls</h2>
+        <p>AetherWalls is a curated collection of high-quality dark-themed wallpapers designed for minimal and immersive aesthetics. Built for creators, explorers, and night owls who love clean, moody visuals.</p>
+        <p>All wallpapers are optimized for different devices and resolutions. Enjoy browsing our collections and customize your screen with elegance.</p>
+        <p style="opacity: 0.6;">Made with ✦ in the void by Sahil Pal</p>
+        <p style="opacity:0.6">Reach me at:</p>
+        <p style="opacity: 0.6;">
+          <div class="icons">
+            <a target="_blank" href="#"><i class="bx bxl-instagram"></i></a>
+            <a target="_blank" href="https://github.com/Sahilpal3"><i class="bx bxl-github"></i></a>
+            <a target="_blank" href="https://www.linkedin.com/in/sahil-pal-603860275/"><i class="bx bxl-linkedin"></i></a>
+          </div>
+        </p>
+      </div>
+    </div>
+    <div class="sign-in" id="sign-in">
+      <div class="sign-in-content">
+        <form action="">
+        <span class="close-btn" onclick="closeSignin()">✕</span>
+        <h3>Login to your Account</h3>
+        <button class="google-btn">
+          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google logo">
+          <span>Continue with Google</span>
+        </button>
+        <p style="justify-content: center;">OR</p>
+        <input type="text" name="email" id="email" placeholder="Email Address"><br>
+        <input type="text" name="email" id="email" placeholder="Password"><br>
+        <a href="" id="forgot">Forgot your password?</a><br>
+        <button id="cont-button">Continue</button>
+        <p>Don't have an Account?<a href="#">Sign-up</a></p>
+      </form>
+      </div>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script>
+      function openAbout(){
+        const modal = document.getElementById("about-modal");
+        modal.classList.add("show");
+      }
+      function closeAbout(){
+        const modal = document.getElementById("about-modal");
+        modal.classList.remove("show");
+      }
+      function openSignin(){
+        const modal = document.getElementById("sign-in");
+        modal.classList.add("show");
+      }
+      function closeSignin(){
+        const modal = document.getElementById("sign-in");
+        modal.classList.remove("show")
+      }
+    </script>
   </body>
 </html>

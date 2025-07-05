@@ -1,5 +1,6 @@
 const sliderTabs = document.querySelectorAll(".slider-tab");
 const sliderIndicator = document.querySelector(".slider-indicator");
+const aboutButton = document.querySelector(".about-main")
 
 //UPDATE the indicator height and width
 const updatePagination = (tab, index) => {
@@ -11,7 +12,7 @@ const updatePagination = (tab, index) => {
 const swiper = new Swiper(".slider-container", {
   effect: "fade",
   speed: 1300,
-  autoplay: { delay: 5000, disableOnInteraction: false },
+  autoplay: { delay: 4000, disableOnInteraction: false },
   on: {
     //update the idicator on slide change
     slideChange: () => {
