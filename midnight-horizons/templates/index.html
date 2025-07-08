@@ -125,10 +125,10 @@
         <form method="POST" action="{{ url_for('login') }}" id="login-form">
         <span class="close-btn" onclick="closeSignin()">✕</span>
         <h3>Login to your Account</h3>
-        <button class="google-btn">
+        <a href="{{ url_for('loginGoogle') }}" class="google-btn">
           <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google logo">
-          <span>Continue with Google</span>
-        </button>
+        <span>Continue with Google</span>
+        </a>
         <p style="justify-content: center;">OR</p>
         <input type="text" name="email" id="login-email" placeholder="Email Address"><br>
         <input type="password" name="password" id="login-password" placeholder="Password"><br>
@@ -144,10 +144,10 @@
         <form method="POST" action="{{ url_for('register') }}" id="register-form">
         <span class="close-btn" onclick="closeRegister()">✕</span>
         <h3>Register a New Account</h3>
-        <button class="google-btn">
+        <a href="{{ url_for('loginGoogle') }}" class="google-btn">
           <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google logo">
           <span>Continue with Google</span>
-        </button>
+        </a>
         <p style="justify-content: center;">OR</p>
         <input type="text" name="email" id="register-email" placeholder="Email Address"><br>
         <input type="text" name="username" id="register-username" placeholder="Username"><br>
@@ -161,6 +161,26 @@
     <div class="acc-panel" id="acc-panel">
       <div class="acc-content" id="acc-content">
         <!-- Content will be populated via JavaScript -->
+      </div>
+    </div>
+    <div class="upload-modal" id="upload-modal">
+      <div class="upload-container">
+        <h3>Upload Wallpaper</h3>
+        <form id="upload-form" enctype="multipart/form-data" method="POST">
+          <label>Select a file:</label> 
+          <input type="file" id="myfile" name="image" accept="image/*" required><br>
+
+          <input type="text" name="author" placeholder="Author Name(Optional)"><br>
+          <input type="text" name="tags" placeholder="Enter Wallpaper tags (comma-separated)" required><br>
+          <select name="collection" id="collection-select">
+            {% for key, value in collections.items() %}
+              <option value="{{ key }}">{{ value.title }}</option>
+            {% endfor %}
+          </select>
+
+          <button type="submit" class="upload-btn">Upload</button>
+          <button type="button" onclick="closeUpload()" class="logout-btn">Cancel</button>
+        </form>
       </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>

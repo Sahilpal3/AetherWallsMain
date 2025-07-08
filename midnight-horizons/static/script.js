@@ -64,9 +64,9 @@ async function openSignin() {
 
       accContent.innerHTML = `
         <span class="close-btn" onclick="closeAccount()">✕</span>
-        <h3>Welcome, ${data.username || data.email}</h3>
+        <h3>Welcome, ${data.username || data.username}</h3>
         <p>You are logged in as <strong>${data.email}</strong></p>
-        <p>Upload Your own Wallpapers:</p><button class="upload-btn">Upload</button>
+        <p>Upload Your own Wallpapers:</p><button class="upload-btn" onclick="uploadFLow()">Upload</button>
         <button onclick="logout()" class="logout-btn">Logout</button>
       `;
     } catch (err) {
@@ -108,6 +108,7 @@ async function handleAccount(){
 document.addEventListener("DOMContentLoaded", function () {
   const loginForm = document.getElementById("login-form");
   const registerForm = document.getElementById("register-form");
+  const uploadForm = document.getElementById("upload-form");
 
   //Login-form
   if (loginForm) {
@@ -184,4 +185,43 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   }
+
+  //upload form
+  if(uploadForm){
+    uploadForm.addEventListener("submit", async function (e){
+      e.preventDefault();
+
+      const formData = new FormData(uploadForm);
+
+      try{
+        const res = await fetch("/upload",{
+          method : "POST",
+          body : formData
+        });
+
+        const data = await res.json()
+
+        if(res.ok){
+          alert('Upload Successful');
+          closeUpload();
+          uploadForm.reset();
+        } else {
+          alert(data.error || "Upload Failed")
+        }
+      }catch (err){
+        alert("Error uploading. Try again!");
+      }
+    })
+  }
 });
+
+//UploadingPics
+function uploadFLow(){
+  const uploadModal = document.getElementById("upload-modal")
+  uploadModal.classList.add("show");
+}
+
+function closeUpload(){
+  const uploadModal = document.getElementById("upload-modal")
+  uploadModal.classList.remove("show");
+}

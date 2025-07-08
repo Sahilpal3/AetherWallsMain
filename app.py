@@ -1,7 +1,9 @@
 from flask import Flask, jsonify, render_template, send_from_directory,request,url_for,session,redirect,flash
 import os
 from werkzeug.utils import secure_filename
+from authlib.integrations.flask_client import OAuth
 from werkzeug.security import generate_password_hash,check_password_hash
+from oauth import CLIENT_SECRET,CLIENT_ID
 from datetime import datetime
 import sqlite3
 
@@ -33,6 +35,7 @@ collections={
         }
     }
     
+    
 #Confiugure upload Folder
 #Specify folder to flask app
 UPLOAD_FOLDER= os.path.join(app.static_folder, 'images')
@@ -49,7 +52,7 @@ def allowed_file(filename):
 #This decorator maps the director /(Current directory to the function index)
 @app.route('/')
 def home():
-    return render_template("index.html")
+    return render_template("index.html", collections = collections)
 
 #dynamic route for any collection
 @app.route('/collection/<collection_name>')
@@ -116,6 +119,7 @@ print(f"Saving to: {UPLOAD_FOLDER}")
 @app.route("/api/wallpapers")
 def wallpapers():
     collection = request.args.get('collection',None)
+    print(f"[DEBUG] Fetching collection: {collection}")
     
     conn = sqlite3.connect('wallpapers.db')
     cur=conn.cursor()
@@ -194,9 +198,78 @@ def logout():
 #function to chek if a user is logged in
 @app.route('/api/session/')
 def session_info():
+    
+    #fetch and sendout the username of the user currently in session
     if 'user_id' in session:
-        return jsonify({'logged_in': True, 'email': session.get('email')})
+        conn = sqlite3.connect("wallpapers.db")
+        cur = conn.cursor()
+        cur.execute("SELECT username FROM users WHERE id = ?",(session['user_id'],))
+        row = cur.fetchone()
+        conn.close()
+        
+        username = row[0] if row else "User"
+        return jsonify({'logged_in': True, 'email': session.get('email'),'username':username})
     return jsonify({'logged_in': False})
+
+
+
+###OAUTH
+#Oauth setup
+oauth = OAuth(app)
+#we are using server metadata url instead of manually douing oauth.register
+#this will use discovery to auto fetc authorize url,token url etc
+server_metadata_url='https://accounts.google.com/.well-known/openid-configuration'
+google = oauth.register(
+    name='google',
+    client_id=CLIENT_ID,
+    client_secret=CLIENT_SECRET,
+    server_metadata_url='https://accounts.google.com/.well-known/openid-configuration',
+    client_kwargs={'scope': 'openid email profile'},
+    api_base_url='https://openidconnect.googleapis.com/v1/'
+)
+
+#redirect to user to login and consent screen
+@app.route('/login/google')
+def loginGoogle():
+    redirect_uri = url_for("google_callback", _external = True)
+    return oauth.google.authorize_redirect(redirect_uri)
+
+#on success get the token from google and use parse_id_token to extract user info(mail,name etc) form the JWT(JSON web token)
+@app.route("/auth/google/callback")
+def google_callback():
+    token = oauth.google.authorize_access_token()
+    #internally does this requests.get(api_base_url + 'userinfo')
+    user_info = oauth.google.get('userinfo').json()
+
+    
+    #check for user in db or else create a new entry
+    conn = sqlite3.connect("wallpapers.db")
+    cur = conn.cursor()
+    cur.execute("SELECT id,password FROM users WHERE email = ?",(user_info['email'],))
+    user = cur.fetchone()
+    conn.close()
+    
+    if user is not None:
+        #set user as current session
+        session['email'] = user_info['email']
+        session['user_id'] = user[0]
+    else:
+        #insert a new user
+        #Enter the data into users db
+        conn = sqlite3.connect("wallpapers.db")
+        cur = conn.cursor()
+        try:
+            cur.execute("INSERT INTO users (email, password, username) VALUES (?,?,?)",(user_info['email'],"google_oauth",user_info['name']))
+            #after entering into the db set the current session to the new logged in user
+            session['user_id'] = cur.lastrowid
+            session['email'] = user_info['email']
+            conn.commit()
+        except sqlite3.IntegrityError:
+            pass
+        finally:
+            conn.close()
+    return redirect(url_for('home'))
+
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -484,3 +484,133 @@
   padding: 10px 16px;
   transition: all 0.2s ease;
 }
+
+.upload-modal{
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  z-index: 1000;
+  pointer-events: none;
+  left: 0;
+  position: fixed;
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  background: rgba(0,0,0,0.8);
+  display: flex;
+  align-items: center;
+  transition: opacity 0.3s ease;
+  justify-content: center;
+}
+.upload-modal.show{
+  opacity: 1;
+  pointer-events: auto;
+}
+.upload-container{
+  height: auto;
+  width: 500px;
+  border-radius: 12px;
+  background: linear-gradient(135deg,#1a1a1a,#0d0d0d);
+  box-shadow: 0 0 25px rgba(255,255,255,0.05);
+  padding: 30px;
+  position: relative;
+  opacity: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  color: #fff;
+  transform: scale(0.8);
+  transition: all 0.3s ease;
+}
+.upload-modal.show .upload-container{
+  transform: scale(1);
+  opacity: 1;
+}
+.upload-close-btn{
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 1.8rem;
+  color: #bbb;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+.upload-close-btn:hover{
+  color: #fff;
+  transform: scale(1.1);
+}
+
+.upload-container h3{
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.upload-container p{
+  font-size: 1rem;
+  color: #ccc;
+  line-height: 1.5;
+}
+
+.upload-container input[type="file"],
+.upload-container input[type="text"]{
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 6px;
+  background-color: #1a1a1a;
+  color: #fff;
+  border: 1px solid #dadce0;
+  margin-bottom: 0px;
+  font-size: 0.95rem;
+  transition: border 0.3s ease;
+}
+
+.upload-container button{
+  background-color: #17de88;
+  color: #1a1a1a;
+  font-weight: 600;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.upload-container button:hover{
+  background-color: #13b670;
+}
+
+.upload-container input:focus{
+  outline: none;
+  border: 1px solid #17de88;
+}
+
+.upload-container label {
+  font-weight: 500;
+  font-size: 0.95rem;
+  margin-bottom: 5px;
+  color: #ccc;
+  display: inline-block;
+}
+
+.upload-container form{
+  display: flex;
+  flex-direction: column;
+}
+
+.upload-container select {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 6px;
+  background-color: #1a1a1a;
+  color: #fff;
+  border: 1px solid #dadce0;
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+  transition: border 0.3s ease;
+  appearance: none;
+}
+
+.upload-container select:focus{
+  outline: none;
+  border: 1px solid #17de88;
+}

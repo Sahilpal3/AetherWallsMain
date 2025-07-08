@@ -24,6 +24,7 @@
       <!-- Fetch through the backend -->
     </section>
 
+
     <!-- Download Modal -->
     <div id="modal" class="download-modal">
       <div class="modal-content">
@@ -92,11 +93,16 @@
       }
 
 
-      fetch('/api/wallpapers?collection={{ collection_name | tojson }}').then(res=>res.json()).then(images=>{
+      fetch('/api/wallpapers?collection={{ collection_name | urlencode }}').then(res=>res.json()).then(images=>{
+        console.log("Fetched images:", images);
         const grid = document.getElementById("wallpaperGrid");
+        if(images.length === 0){
+          grid.innerHTML = "<p>No wallpapers found in this collection yet.</p>";
+          return;
+        }
         grid.innerHTML = images.map(img => `
           <div class="wallpaper-card">
-            <img src="/static/images/${img.filename}" alt="${img.alt}"/>
+            <img src="/static/images/${img.filename}" onerror="this.src='/static/images/fallback.png'" alt="${img.alt}"/>
             <button class="download-btn" onclick='openModal("/static/images/${img.filename}", "${img.author}", ${JSON.stringify(img.tags)})'>⇩</button>
             <p>Uploaded by ${img.author}</p>
           </div>
