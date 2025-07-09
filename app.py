@@ -3,13 +3,14 @@ import os
 from werkzeug.utils import secure_filename
 from authlib.integrations.flask_client import OAuth
 from werkzeug.security import generate_password_hash,check_password_hash
-from oauth import CLIENT_SECRET,CLIENT_ID
 from datetime import datetime
 import sqlite3
 
 app = Flask(__name__,template_folder="midnight-horizons/templates",static_folder="midnight-horizons/static")
 app.secret_key = "Aether_walls_2025_1539"
 
+CLIENT_ID = os.getenv("CLIENT_ID")
+CLIENT_SECRET = os.getenv("CLIENT_SECRET")
 
 #create a dictionary for collection data and the generate the page dynamically
 collections={
