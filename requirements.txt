@@ -142,7 +142,6 @@ python-json-logger==3.3.0
 pytweening==1.2.0
 pytz==2024.2
 pywhatkit==5.4
-pywin32==310
 pywin32-ctypes==0.2.3
 pywinpty==2.0.15
 PyYAML==6.0.2
