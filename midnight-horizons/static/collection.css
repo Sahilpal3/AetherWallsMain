@@ -108,8 +108,9 @@ html, body {
   }
 }
 .wallpaper-card{
-  display: inline-block;
-  width: 100%;
+  display: block;
+  width: auto;
+  break-inside: avoid;
   margin-bottom: 20px;
   position: relative;
   overflow: hidden;
@@ -118,7 +119,6 @@ html, body {
 .wallpaper-card img {
   width: 100%;
   height: auto;
-  
   display: block;
   border-radius: 10px;
   transition: transform 0.4s ease;
