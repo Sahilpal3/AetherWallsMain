@@ -3,7 +3,7 @@ import os
 from werkzeug.utils import secure_filename
 from authlib.integrations.flask_client import OAuth
 from werkzeug.security import generate_password_hash,check_password_hash
-from oauth import CLIENT_SECRET,CLIENT_ID
+from oauth import CLIENT_SECRET,CLIENT_ID   
 from datetime import datetime
 import sqlite3
 
@@ -211,7 +211,50 @@ def session_info():
         return jsonify({'logged_in': True, 'email': session.get('email'),'username':username})
     return jsonify({'logged_in': False})
 
+#toggling favourites
+@app.route('/api/favorite',methods=['POST'])
+def toggle_favorite():
+    if 'user_id' not in session:
+        return jsonify({'error':'Unauthorizesd'}), 403
+    
+    data = request.get_json()
+    filename = data.get('filename')
+    
+    conn = sqlite3.connect("wallpapers.db")
+    cur = conn.cursor()
+    cur.execute("SELECT id FROM favorites WHERE user_id = ? AND wallpaper_filename = ?", (session['user_id'], filename))
+    exists = cur.fetchone()
+    
+    if exists:
+        cur.execute('DELETE FROM favorites WHERE user_id = ? AND wallpaper_filename = ?',(session['user_id'], filename))
+        conn.commit()
+        conn.close()
+        return jsonify({'message': 'Removed from favorites'})
+    
+    else:
+        cur.execute('INSERT INTO favorites (user_id, wallpaper_filename) VALUES (?, ?)', (session['user_id'], filename))
+        conn.commit()
+        conn.close()    
+        return jsonify({'message': 'Added to favorites'})
 
+#fetching favorites
+@app.route('/api/favorites')
+def get_favorites():
+    if 'user_id' not in session:
+        return jsonify({'error':'Unauthorized'}), 403
+    
+    try:
+        print(f"[DEBUG] user_id in session: {session['user_id']}")
+        conn = sqlite3.connect("wallpapers.db")
+        cur = conn.cursor()
+        cur.execute('SELECT wallpaper_filename FROM favorites WHERE user_id = ?',(session['user_id'],))
+        rows = cur.fetchall()
+        conn.close()
+        favorites = [row[0] for row in rows]
+        return jsonify({'favorites':favorites})
+    except Exception as e:
+        print("[ERROR] Failed to fetch favorites:", e)
+        return jsonify({'error': 'Server error fetching favorites', 'details': str(e)}), 500
 
 ###OAUTH
 #Oauth setup
