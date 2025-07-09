@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Void Forms | DarkCanvas</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='collection.css') }}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   </head>
   <body>
     <header class="site-header">
@@ -69,7 +70,7 @@
         modalImage.src = imgSrc;
         authname.innerHTML = `Uploaded by ${author}`
 
-        tagContainer.innerHTML = tags.map(tag => `<span class="tag">${tag}</span>`).join(' ');
+        tagContainer.innerHTML = tags.length > 0 ? `<strong style="margin-right: 8px; font-weight: 500; opacity: 0.8;">Tags:</strong>` + tags.map(tag => `<span class="tag">${tag}</span>`).join(' ') : `<em style="opacity: 0.6;">No tags</em>`;
 
         modalLinks.innerHTML = `
         <a href="${baseName}-original.jpg" download>Original</a>
@@ -93,22 +94,65 @@
       }
 
 
-      fetch('/api/wallpapers?collection={{ collection_name | urlencode }}').then(res=>res.json()).then(images=>{
-        console.log("Fetched images:", images);
-        const grid = document.getElementById("wallpaperGrid");
-        if(images.length === 0){
-          grid.innerHTML = "<p>No wallpapers found in this collection yet.</p>";
-          return;
-        }
-        grid.innerHTML = images.map(img => `
-          <div class="wallpaper-card">
-            <img src="/static/images/${img.filename}" onerror="this.src='/static/images/fallback.png'" alt="${img.alt}"/>
-            <button class="download-btn" onclick='openModal("/static/images/${img.filename}", "${img.author}", ${JSON.stringify(img.tags)})'>⇩</button>
-            <p>Uploaded by ${img.author}</p>
-          </div>
-`).join('');
+      async function toggleFavorite(filename, btn){
+        try {
+          const res = await fetch('/api/favorite', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ filename })
+        });
 
-      });
+        const data = await res.json();
+        if(res.ok){
+          btn.classList.toggle("fav-active");
+          btn.innerText = btn.classList.contains("fav-active") ? "♥" : "♡";
+        } else {
+          alert(data.error || "Login to save Favorites.");
+        }
+
+        } catch(err){
+          alert("Failed to toggle favorite");
+          }
+}
+
+      async function loadWallpapers(){
+        try{
+          const res = await fetch('/api/wallpapers?collection={{ collection_name | urlencode }}');
+          const images = await res.json();
+
+          const favRes = await fetch('/api/favorites');
+          const favData = await favRes.json();
+          const favorites = favData.favorites || [];
+
+          const grid = document.getElementById("wallpaperGrid");
+
+          if(images.length === 0){
+            grid.innerHTML = '<p style="color:#fff">No wallpapers in this collection yet.</p>'
+            return; 
+          }
+
+          grid.innerHTML = images.map(img => {
+            const isFav = favorites.includes(img.filename);
+            const imgPath = "/static/images/" + img.filename ;
+            const tagsHTML = JSON.stringify(img.tags);
+
+            return `
+            <div class="wallpaper-card">
+              <img src="${imgPath}" onerror="this.src='/static/images/fallback.png'" alt="${img.alt}" />
+              <button class="download-btn" onclick='openModal("${imgPath}", "${img.author}", ${tagsHTML})'>⇩</button>
+              <button class="fav-btn ${isFav ? 'fav-active' : ''}" onclick='toggleFavorite("${img.filename}", this)'>${isFav ? '♥' : '♡'}</button>
+              <p class="author-label">Uploaded by ${img.author}</p>
+            </div>
+`;
+          }).join('');
+
+        }catch(error){
+          console.error("Failed to load Wallpapers",error);
+          document.getElementById("wallpaperGrid").innerHTML= "<p>Failed to load wallpapers.</p>";
+        }
+      }
+
+      loadWallpapers();
     </script>
   </body>
 </html>

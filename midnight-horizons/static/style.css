@@ -80,7 +80,7 @@
   background-image: url("img3.jpg");
 }
 .slider-wrapper .slider-item:nth-child(4)::before {
-  background-image: url("img4.jpg");
+  background-image: url("img4.jpeg");
 }
 .slider-wrapper .slider-item:nth-child(5)::before {
   background-image: url("img5.jpg");
